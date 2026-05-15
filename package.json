@@ -1,0 +1,13 @@
+{
+  "name": "code-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "代码阅读 skill — Claude Code Skill",
+  "type": "module",
+  "bin": {
+    "render-mermaid": "./scripts/render-mermaid.mjs"
+  },
+  "dependencies": {
+    "beautiful-mermaid": "^1.1.3"
+  }
+}

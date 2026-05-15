@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【信号名】— 信号生命周期追踪</title>
+
+<!-- highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"
+  onload="hljs.highlightAll();"></script>
+
+<style>
+:root {
+  --text-primary: #1a1a2e; --text-secondary: #4a4a6a; --text-muted: #8888a0;
+  --bg-page: #fafaf8; --bg-card: #ffffff; --bg-code: #f4f4f0;
+  --color-entry: #7c3aed; --color-entry-bg: #f5f3ff;
+  --color-core: #7c3aed; --color-core-bg: #f5f3ff;
+  --color-dependency: #2563eb; --color-dependency-bg: #eff6ff;
+  --color-warning: #dc2626; --color-warning-bg: #fef2f2;
+  --color-success: #059669; --color-success-bg: #ecfdf5;
+  --color-tip: #d97706; --color-tip-bg: #fffbeb;
+  --color-accent: #7c3aed; --color-highlight: #fbbf24;
+  --color-card-border: #e0e0e0; --color-card-shadow: rgba(0,0,0,0.06); --color-card-hover-shadow: rgba(124,58,237,0.12);
+  --flow-node-bg: #f5f3ff; --flow-node-border: #7c3aed; --flow-arrow: #7c3aed;
+  --space-xs: 0.25rem; --space-sm: 0.5rem; --space-md: 1rem; --space-lg: 1.5rem; --space-xl: 2.5rem; --space-2xl: 4rem;
+  --font-body: "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
+  --font-heading: "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  --content-width: 56rem; --sidebar-width: 14rem; --border-radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #e8e8f0; --text-secondary: #a0a0b8; --text-muted: #6a6a80;
+    --bg-page: #0f0f1a; --bg-card: #1a1a2e; --bg-code: #16162a;
+    --color-entry: #a78bfa; --color-entry-bg: #1e1340; --color-core: #a78bfa; --color-core-bg: #1e1340;
+    --color-dependency: #60a5fa; --color-dependency-bg: #0a1a30;
+    --color-warning: #f87171; --color-warning-bg: #1a0a0a;
+    --color-success: #34d399; --color-success-bg: #0a2018;
+    --color-tip: #fbbf24; --color-tip-bg: #1a1500; --color-accent: #a78bfa;
+    --color-card-border: #2a2a4a; --color-card-shadow: rgba(0,0,0,0.35); --color-card-hover-shadow: rgba(167,139,250,0.15);
+    --flow-node-bg: #1e1340; --flow-node-border: #a78bfa; --flow-arrow: #a78bfa;
+  }
+  .hljs { background: var(--bg-code) !important; color: var(--text-primary) !important; }
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); color: var(--text-primary); background: var(--bg-page); line-height: 1.8; max-width: var(--content-width); margin: 0 auto; padding: var(--space-xl); }
+h1, h2, h3, h4 { font-family: var(--font-heading); line-height: 1.3; margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+h1 { font-size: 2rem; color: var(--color-entry); border-bottom: 3px solid var(--color-entry); padding-bottom: var(--space-sm); }
+h2 { font-size: 1.5rem; color: var(--color-entry); border-left: 4px solid var(--color-accent); padding-left: var(--space-md); }
+h3 { font-size: 1.2rem; color: var(--text-secondary); margin-top: var(--space-xl); }
+p { margin-bottom: var(--space-md); }
+a { color: var(--color-dependency); } a:hover { color: var(--color-accent); }
+code { font-family: var(--font-mono); font-size: 0.9em; background: var(--bg-code); padding: 0.15em 0.4em; border-radius: 4px; }
+pre { background: var(--bg-code); border: 1px solid var(--color-card-border); border-radius: var(--border-radius); padding: var(--space-md) var(--space-lg); overflow-x: auto; font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.6; margin: var(--space-lg) 0; }
+pre code { background: none; padding: 0; border: none; }
+.meta-bar { font-family: var(--font-heading); font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-2xl); padding: var(--space-md) var(--space-lg); background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--color-card-border); box-shadow: 0 2px 8px var(--color-card-shadow); }
+.callout { border-left: 4px solid; border-radius: 0 var(--border-radius) var(--border-radius) 0; padding: var(--space-md) var(--space-lg); margin: var(--space-lg) 0; }
+.callout-title { font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; margin-bottom: var(--space-sm); }
+.callout-entry { border-color: var(--color-entry); background: var(--color-entry-bg); }
+.callout-entry .callout-title { color: var(--color-entry); }
+.callout-dependency { border-color: var(--color-dependency); background: var(--color-dependency-bg); }
+.callout-dependency .callout-title { color: var(--color-dependency); }
+.callout-warning { border-color: var(--color-warning); background: var(--color-warning-bg); }
+.callout-warning .callout-title { color: var(--color-warning); }
+.callout-tip { border-color: var(--color-tip); background: var(--color-tip-bg); }
+.callout-tip .callout-title { color: var(--color-tip); }
+table { width: 100%; border-collapse: collapse; margin: var(--space-lg) 0; font-size: 0.95rem; }
+th { font-family: var(--font-heading); font-weight: 700; text-align: left; padding: var(--space-sm) var(--space-md); border-bottom: 2px solid var(--color-entry); color: var(--color-entry); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+td { padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-card-border); vertical-align: top; }
+tr:hover { background: var(--color-entry-bg); }
+.code-annotated { margin: var(--space-lg) 0; }
+.code-label { font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; color: var(--color-entry); margin-bottom: var(--space-sm); padding: var(--space-xs) var(--space-sm); background: var(--color-entry-bg); border-radius: 4px 4px 0 0; display: inline-block; }
+svg { max-width: 100%; height: auto; margin: var(--space-lg) auto; display: block; }
+.toc-wrapper { position: fixed; top: var(--space-lg); right: var(--space-lg); z-index: 100; font-family: var(--font-heading); }
+.toc-toggle { width: 2.5rem; height: 2.5rem; border: 1px solid var(--color-card-border); border-radius: var(--border-radius); background: var(--bg-card); color: var(--text-secondary); font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 8px var(--color-card-shadow); display: flex; align-items: center; justify-content: center; }
+.toc-toggle:hover { box-shadow: 0 4px 16px var(--color-card-hover-shadow); color: var(--color-accent); }
+.toc-panel { display: none; position: absolute; top: calc(2.5rem + var(--space-sm)); right: 0; width: 15rem; padding: var(--space-md) var(--space-lg); background: var(--bg-card); border: 1px solid var(--color-card-border); border-radius: var(--border-radius); box-shadow: 0 8px 24px var(--color-card-shadow); font-size: 0.85rem; line-height: 2; }
+.toc-panel.open { display: block; }
+.toc-panel-title { font-weight: 700; color: var(--color-entry); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-sm); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--color-entry); }
+.toc-panel a { display: block; color: var(--text-secondary); text-decoration: none; }
+.toc-panel a:hover { color: var(--color-accent); background: var(--color-entry-bg); padding-left: 4px; }
+.back-to-top { position: fixed; bottom: var(--space-lg); right: var(--space-lg); width: 2.5rem; height: 2.5rem; border: 1px solid var(--color-card-border); border-radius: 50%; background: var(--bg-card); color: var(--text-secondary); font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 8px var(--color-card-shadow); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 99; }
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+.back-to-top:hover { color: var(--color-accent); }
+section + section { border-top: 1px solid var(--color-card-border); margin-top: var(--space-2xl); padding-top: var(--space-xl); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.stagger > * { animation: fadeUp 0.4s ease both; animation-delay: calc(var(--i, 0) * 80ms); }
+@media (prefers-reduced-motion: reduce) { .stagger > * { animation: none; } }
+
+/* ========== Timing Diagram ========== */
+.timing-diagram { margin: var(--space-xl) 0; overflow-x: auto; }
+.timing-diagram svg { font-family: var(--font-mono); font-size: 0.75rem; }
+.timing-lane { fill: none; stroke: var(--color-card-border); stroke-width: 1; }
+.timing-lane-label { fill: var(--text-secondary); font-weight: 700; font-size: 0.8rem; }
+.timing-signal { stroke-width: 2; fill: none; }
+.timing-signal-active { stroke-width: 2; fill: var(--color-entry-bg); fill-opacity: 0.5; }
+.timing-arrow { stroke: var(--color-entry); stroke-width: 1.5; fill: none; marker-end: url(#arrow-timing); }
+.timing-arrow-label { fill: var(--color-entry); font-size: 0.7rem; }
+.timing-tick { fill: var(--text-muted); font-size: 0.7rem; }
+.timing-divider { stroke: var(--color-card-border); stroke-width: 1; stroke-dasharray: 4,4; }
+
+/* ========== Data Flow Specific ========== */
+.flow-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: var(--space-xl) 0;
+  overflow-x: auto;
+  padding: var(--space-md) 0 var(--space-lg);
+  -webkit-overflow-scrolling: touch;
+}
+.flow-step {
+  flex: 0 0 auto;
+  background: var(--flow-node-bg);
+  border: 2px solid var(--flow-node-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-md) var(--space-lg);
+  min-width: 10rem;
+  max-width: 14rem;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--color-card-shadow);
+}
+.flow-step .step-label {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-entry);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-xs);
+}
+.flow-step .step-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+.flow-step .step-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.flow-step.step-branch {
+  border-color: var(--color-tip);
+  background: var(--color-tip-bg);
+}
+.flow-step.step-branch .step-label { color: var(--color-tip); }
+.flow-step.step-output {
+  border-color: var(--color-success);
+  background: var(--color-success-bg);
+  border-width: 3px;
+}
+.flow-step.step-output .step-label { color: var(--color-success); }
+.flow-arrow {
+  flex: 0 0 auto;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--flow-arrow);
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.flow-arrow svg { width: 2.5rem; height: 1.2rem; margin: 0; display: block; }
+
+@media (max-width: 48rem) {
+  body { padding: var(--space-md); } h1 { font-size: 1.5rem; } h2 { font-size: 1.25rem; }
+  .flow-container { flex-direction: column; align-items: stretch; }
+  .flow-arrow { transform: rotate(90deg); width: auto; height: 2rem; }
+}
+@media print {
+  .toc-wrapper, .back-to-top { display: none; }
+  body { max-width: 100%; padding: 1cm; }
+  .callout { break-inside: avoid; }
+  pre { white-space: pre-wrap; }
+  .flow-container { flex-wrap: wrap; }
+  .flow-step { box-shadow: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== TOC ===== -->
+<div class="toc-wrapper">
+  <button class="toc-toggle" aria-label="目录" title="目录">&#x2261;</button>
+  <div class="toc-panel" id="toc-panel">
+    <div class="toc-panel-title">信号生命周期</div>
+    <a href="#signal">信号定义</a>
+    <a href="#entry">入口点</a>
+    <a href="#flow">数据流图</a>
+    <a href="#timing">时序图</a>
+    <a href="#nodes">关键节点</a>
+    <a href="#deps">外部依赖</a>
+    <a href="#next">建议下一步</a>
+  </div>
+</div>
+
+<!-- ===== Title + Meta ===== -->
+<h1>&#x1f50d; 【信号名】— 信号生命周期追踪</h1>
+<div class="meta-bar">
+  项目路径：<code>【项目路径】</code><br>
+  信号起点：<code>【起点位置】</code><br>
+  信号终点：<code>【终点位置】</code><br>
+  追踪日期：【YYYY-MM-DD】
+</div>
+
+<!-- ===== 1. 信号定义 ===== -->
+<section id="signal">
+<h2>1. 信号定义</h2>
+<table>
+  <thead><tr><th>项目</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td><strong>信号名</strong></td><td>【一条指令 / 一个 HTTP 请求 / 一个中断信号 / 一笔 DMA 传输】</td></tr>
+    <tr><td><strong>起点</strong></td><td><code>【path/to/entry:line】</code> — 【怎么触发的】</td></tr>
+    <tr><td><strong>终点</strong></td><td><code>【path/to/end:line】</code> — 【怎么终结的】</td></tr>
+    <tr><td><strong>时间尺度</strong></td><td>【5 拍 / 10ms / 3 次函数调用】</td></tr>
+    <tr><td><strong>拓扑</strong></td><td>【串行为主 / 含分支 / 含并行 pipeline / 含回环】</td></tr>
+  </tbody>
+</table>
+<p>【补充说明：这个信号在项目中的角色，为什么追踪它。】</p>
+</section>
+
+<!-- ===== 2. 入口点 ===== -->
+<section id="entry">
+<h2>2. 入口点</h2>
+
+<div class="callout callout-entry">
+  <div class="callout-title">&#x1f3e0; 入口</div>
+  <div class="callout-body">
+    <p><code>【path/to/entry:line】</code></p>
+    <p>【这个入口是路由 / 事件处理器 / CLI 命令 / 函数调用】</p>
+  </div>
+</div>
+</section>
+
+<!-- ===== 3. 数据流 ===== -->
+<section id="flow">
+<h2>3. 数据流</h2>
+
+<!-- Horizontal Flow Diagram -->
+<div class="flow-container">
+  <div class="flow-step">
+    <div class="step-label">输入</div>
+    <div class="step-title">【外部输入】</div>
+    <div class="step-desc">【HTTP 请求 / 用户输入 / 文件 / 消息队列】</div>
+  </div>
+
+  <div class="flow-arrow">
+    <svg viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg">
+      <line x1="2" y1="10" x2="32" y2="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="32,4 40,10 32,16" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <div class="flow-step">
+    <div class="step-label">Node 1</div>
+    <div class="step-title">【模块A】</div>
+    <div class="step-desc">【做了什么变换】</div>
+  </div>
+
+  <div class="flow-arrow">
+    <svg viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg">
+      <line x1="2" y1="10" x2="32" y2="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="32,4 40,10 32,16" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <div class="flow-step step-branch">
+    <div class="step-label">&#x26a0;&#xfe0f; 分支</div>
+    <div class="step-title">【条件判断】</div>
+    <div class="step-desc">【if/switch，走向不同路径】</div>
+  </div>
+
+  <div class="flow-arrow">
+    <svg viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg">
+      <line x1="2" y1="10" x2="32" y2="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="32,4 40,10 32,16" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <div class="flow-step">
+    <div class="step-label">Node N</div>
+    <div class="step-title">【模块B】</div>
+    <div class="step-desc">【做了什么变换】</div>
+  </div>
+
+  <div class="flow-arrow">
+    <svg viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg">
+      <line x1="2" y1="10" x2="32" y2="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="32,4 40,10 32,16" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <div class="flow-step step-output">
+    <div class="step-label">输出</div>
+    <div class="step-title">【最终输出】</div>
+    <div class="step-desc">【HTTP 响应 / 写入 DB / 返回值 / 文件】</div>
+  </div>
+</div>
+
+<!-- SVG full diagram for complex flows -->
+<h3>完整数据流图</h3>
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg"
+     style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
+      markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <!-- agent 按实际数据流填充：输入 → 模块A → 分支 → 模块B → 输出 -->
+  <!-- 分支节点：fill="#fffbeb" stroke="#d97706" -->
+  <!-- 普通节点：fill="#f5f3ff" stroke="#7c3aed" -->
+</svg>
+</section>
+
+<!-- ===== 4. 时序图 ===== -->
+<section id="timing">
+<h2>4. 时序图</h2>
+
+<p>【说明信号在各阶段的并行/时序关系。】</p>
+
+<div class="timing-diagram">
+<svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg"
+     style="font-family: 'JetBrains Mono', monospace;">
+  <defs>
+    <marker id="arrow-timing" viewBox="0 0 10 7" refX="10" refY="3.5"
+      markerWidth="6" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--color-entry)"/>
+    </marker>
+  </defs>
+  <!-- 泳道标签（左侧） -->
+  <!-- 时间刻度（顶部 T0, T1, T2...） -->
+  <!-- 信号箭头（从一个泳道到另一个泳道，带标注） -->
+  <!-- 有效区间（rect 填充表示信号在某阶段有效） -->
+  <!-- agent 按实际时序填充 -->
+</svg>
+</div>
+</section>
+
+<!-- ===== 5. 关键节点详情 ===== -->
+<section id="nodes">
+<h2>5. 关键节点详情</h2>
+
+<div class="depth-l1" style="margin-bottom: var(--space-xl);">
+  <h3>Node 1：【模块A】</h3>
+  <div class="code-annotated">
+    <div class="code-label">【path/to/moduleA】— 关键代码</div>
+    <pre><code class="language-【python/javascript/java/...】">【不超过 10 行关键代码】</code></pre>
+  </div>
+  <table>
+    <thead><tr><th>项目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><strong>输入</strong></td><td>【xxx】</td></tr>
+      <tr><td><strong>变换</strong></td><td>【xxx &rarr; xxx】</td></tr>
+      <tr><td><strong>输出</strong></td><td>【xxx】</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="depth-l1" style="margin-bottom: var(--space-xl);">
+  <h3>Node 2：【模块B】</h3>
+  <div class="code-annotated">
+    <div class="code-label">【path/to/moduleB】— 关键代码</div>
+    <pre><code class="language-【python/javascript/java/...】">【不超过 10 行关键代码】</code></pre>
+  </div>
+  <table>
+    <thead><tr><th>项目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><strong>输入</strong></td><td>【xxx】</td></tr>
+      <tr><td><strong>变换</strong></td><td>【xxx &rarr; xxx】</td></tr>
+      <tr><td><strong>输出</strong></td><td>【xxx】</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 继续添加节点 -->
+</section>
+
+<!-- ===== 6. 外部依赖 ===== -->
+<section id="deps">
+<h2>6. 外部依赖</h2>
+
+<div class="callout callout-dependency">
+  <div class="callout-title">&#x1f517; 外部依赖</div>
+  <div class="callout-body">
+    <table>
+      <thead><tr><th>依赖</th><th>类型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>【PostgreSQL】</strong></td><td>数据库</td><td>【存储 xx 表】</td></tr>
+        <tr><td><strong>【Redis】</strong></td><td>缓存</td><td>【session 存储】</td></tr>
+        <!-- 继续添加 -->
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- ===== 7. 建议下一步 ===== -->
+<section id="next">
+<h2>7. 建议下一步</h2>
+
+<div class="callout callout-tip">
+  <div class="callout-title">&#x1f4a1; 推荐</div>
+  <div class="callout-body">
+    <ul>
+      <li>深入某个节点：<code>/code-viewer deep 【模块路径】</code></li>
+      <li>追踪另一条数据流：<code>/code-viewer flow 【其他功能】</code></li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<button class="back-to-top" aria-label="回到顶部" title="回到顶部">&#x2191;</button>
+<script>
+(function(){
+  var btn = document.querySelector('.toc-toggle');
+  var panel = document.getElementById('toc-panel');
+  btn.addEventListener('click', function(e){ e.stopPropagation(); panel.classList.toggle('open'); });
+  document.addEventListener('click', function(e){ if (!panel.contains(e.target) && e.target !== btn) panel.classList.remove('open'); });
+  panel.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ panel.classList.remove('open'); }); });
+  var topBtn = document.querySelector('.back-to-top');
+  window.addEventListener('scroll', function(){ topBtn.classList.toggle('visible', window.scrollY > 600); });
+  topBtn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+})();
+</script>
+
+</body>
+</html>
