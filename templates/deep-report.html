@@ -252,12 +252,12 @@
   </thead>
   <tbody>
     <tr>
-      <td><strong>【调用者A】</strong></td>
+      <td><strong><a href="#dep-callerA">【调用者A】</a></strong></td>
       <td><code>【src/xxx:42】</code></td>
       <td><code>【调用语句】</code></td>
       <td>【为什么调用我】</td>
     </tr>
-    <!-- 继续添加 -->
+    <!-- 继续添加，调用者名用 <a href="#dep-xxx"> 包裹，点击跳转到调用者分析 -->
   </tbody>
 </table>
 
@@ -273,12 +273,12 @@
   </thead>
   <tbody class="stagger">
     <tr style="--i: 0">
-      <td><strong>【模块A】</strong></td>
+      <td><strong><a href="#dep-moduleA">【模块A】</a></strong></td>
       <td><code>【src/xxx:15】</code></td>
       <td><code>【调用语句】</code></td>
       <td>【做什么】</td>
     </tr>
-    <!-- 继续添加 -->
+    <!-- 继续添加，被调用模块名用 <a href="#dep-xxx"> 包裹 -->
   </tbody>
 </table>
 
