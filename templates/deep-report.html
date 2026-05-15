@@ -12,62 +12,12 @@
   onload="hljs.highlightAll();"></script>
 
 <style>
-/* ========== CSS Variables ========== */
-:root {
-  --text-primary: #1a1a2e; --text-secondary: #4a4a6a; --text-muted: #8888a0;
-  --bg-page: #fafaf8; --bg-card: #ffffff; --bg-code: #f4f4f0;
-  --color-entry: #7c3aed; --color-entry-bg: #f5f3ff;
-  --color-core: #7c3aed; --color-core-bg: #f5f3ff;
-  --color-dependency: #2563eb; --color-dependency-bg: #eff6ff;
-  --color-warning: #dc2626; --color-warning-bg: #fef2f2;
-  --color-success: #059669; --color-success-bg: #ecfdf5;
-  --color-tip: #d97706; --color-tip-bg: #fffbeb;
-  --color-accent: #7c3aed; --color-highlight: #fbbf24;
-  --color-card-border: #e0e0e0; --color-card-shadow: rgba(0,0,0,0.06); --color-card-hover-shadow: rgba(124,58,237,0.12);
-  --space-xs: 0.25rem; --space-sm: 0.5rem; --space-md: 1rem; --space-lg: 1.5rem; --space-xl: 2.5rem; --space-2xl: 4rem;
-  --font-body: "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
-  --font-heading: "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
-  --content-width: 60rem; --sidebar-width: 16rem; --border-radius: 10px;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-primary: #e8e8f0; --text-secondary: #a0a0b8; --text-muted: #6a6a80;
-    --bg-page: #0f0f1a; --bg-card: #1a1a2e; --bg-code: #16162a;
-    --color-entry: #a78bfa; --color-entry-bg: #1e1340; --color-core: #a78bfa; --color-core-bg: #1e1340;
-    --color-dependency: #60a5fa; --color-dependency-bg: #0a1a30;
-    --color-warning: #f87171; --color-warning-bg: #1a0a0a;
-    --color-success: #34d399; --color-success-bg: #0a2018;
-    --color-tip: #fbbf24; --color-tip-bg: #1a1500; --color-accent: #a78bfa;
-    --color-card-border: #2a2a4a; --color-card-shadow: rgba(0,0,0,0.35); --color-card-hover-shadow: rgba(167,139,250,0.15);
-  }
-  .hljs { background: var(--bg-code) !important; color: var(--text-primary) !important; }
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-body); color: var(--text-primary); background: var(--bg-page); line-height: 1.8; max-width: var(--content-width); margin: 0 auto; padding: var(--space-xl); }
-h1, h2, h3, h4, h5 { font-family: var(--font-heading); line-height: 1.3; margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
-h1 { font-size: 2rem; color: var(--color-entry); border-bottom: 3px solid var(--color-entry); padding-bottom: var(--space-sm); }
-h2 { font-size: 1.5rem; color: var(--color-entry); border-left: 4px solid var(--color-accent); padding-left: var(--space-md); }
-h3 { font-size: 1.2rem; color: var(--text-secondary); margin-top: var(--space-xl); }
-h4 { font-size: 1.05rem; margin-top: var(--space-lg); }
-h5 { font-size: 0.95rem; margin-top: var(--space-md); color: var(--text-secondary); }
-p { margin-bottom: var(--space-md); }
-a { color: var(--color-dependency); } a:hover { color: var(--color-accent); }
-code { font-family: var(--font-mono); font-size: 0.9em; background: var(--bg-code); padding: 0.15em 0.4em; border-radius: 4px; }
-pre { background: var(--bg-code); border: 1px solid var(--color-card-border); border-radius: var(--border-radius); padding: var(--space-md) var(--space-lg); overflow-x: auto; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: var(--space-lg) 0; }
-pre code { background: none; padding: 0; border: none; }
-.meta-bar { font-family: var(--font-heading); font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-2xl); padding: var(--space-md) var(--space-lg); background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--color-card-border); box-shadow: 0 2px 8px var(--color-card-shadow); }
-.callout { border-left: 4px solid; border-radius: 0 var(--border-radius) var(--border-radius) 0; padding: var(--space-md) var(--space-lg); margin: var(--space-lg) 0; }
-.callout-title { font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; margin-bottom: var(--space-sm); }
-.callout-entry { border-color: var(--color-entry); background: var(--color-entry-bg); } .callout-entry .callout-title { color: var(--color-entry); }
-.callout-dependency { border-color: var(--color-dependency); background: var(--color-dependency-bg); } .callout-dependency .callout-title { color: var(--color-dependency); }
-.callout-warning { border-color: var(--color-warning); background: var(--color-warning-bg); } .callout-warning .callout-title { color: var(--color-warning); }
-.callout-tip { border-color: var(--color-tip); background: var(--color-tip-bg); } .callout-tip .callout-title { color: var(--color-tip); }
-.callout-success { border-color: var(--color-success); background: var(--color-success-bg); } .callout-success .callout-title { color: var(--color-success); }
+/* ===== Inject shared-styles.css (templates/shared-styles.css) ===== */
+/* CSS Variables, Dark Mode, Reset, Base, Callouts, Layer Badge, Tables,
+   Code Annotated, SVG, TOC, Back to Top, Stagger, Section Divider, Responsive
+   — 全部来自 shared-styles.css，这里省略以避免重复 */
 
-/* ========== Code Blocks ========== */
-.code-annotated { margin: var(--space-lg) 0; }
-.code-label { font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; color: var(--color-entry); margin-bottom: var(--space-sm); padding: var(--space-xs) var(--space-sm); background: var(--color-entry-bg); border-radius: 4px 4px 0 0; display: inline-block; }
+/* ===== deep-report 独有样式 ===== */
 
 /* ========== WHY/WHAT/HOW Code Block ========== */
 .code-block {
@@ -122,44 +72,57 @@ pre code { background: none; padding: 0; border: none; }
 }
 .code-block-how strong { color: var(--text-primary); }
 
-/* ========== Tables ========== */
-table { width: 100%; border-collapse: collapse; margin: var(--space-lg) 0; font-size: 0.95rem; }
-th { font-family: var(--font-heading); font-weight: 700; text-align: left; padding: var(--space-sm) var(--space-md); border-bottom: 2px solid var(--color-entry); color: var(--color-entry); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
-td { padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-card-border); vertical-align: top; }
-tr:hover { background: var(--color-entry-bg); }
+/* ========== Glue/Config Skipped Block ========== */
+.code-block-skipped {
+  background: var(--bg-code);
+  border: 1px dashed var(--color-card-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-sm) var(--space-md);
+  margin: var(--space-sm) 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.code-block-skipped .file-path {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
 
-/* ========== SVG ========== */
-svg { max-width: 100%; height: auto; margin: var(--space-lg) auto; display: block; }
-
-/* ========== TOC (Fixed Toggle) ========== */
-.toc-wrapper { position: fixed; top: var(--space-lg); right: var(--space-lg); z-index: 100; font-family: var(--font-heading); }
-.toc-toggle { width: 2.5rem; height: 2.5rem; border: 1px solid var(--color-card-border); border-radius: var(--border-radius); background: var(--bg-card); color: var(--text-secondary); font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 8px var(--color-card-shadow); display: flex; align-items: center; justify-content: center; }
-.toc-toggle:hover { box-shadow: 0 4px 16px var(--color-card-hover-shadow); color: var(--color-accent); }
-.toc-panel { display: none; position: absolute; top: calc(2.5rem + var(--space-sm)); right: 0; width: 20rem; padding: var(--space-md) var(--space-lg); background: var(--bg-card); border: 1px solid var(--color-card-border); border-radius: var(--border-radius); box-shadow: 0 8px 24px var(--color-card-shadow); font-size: 0.85rem; line-height: 2; }
-.toc-panel.open { display: block; }
-.toc-panel-title { font-weight: 700; color: var(--color-entry); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-sm); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--color-entry); }
-.toc-panel .toc-phase { font-weight: 700; color: var(--text-primary); font-size: 0.8rem; margin-top: var(--space-sm); padding-top: var(--space-xs); border-top: 1px solid var(--color-card-border); }
-.toc-panel .toc-phase:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
-.toc-panel a { display: block; color: var(--text-secondary); text-decoration: none; }
-.toc-panel a:hover { color: var(--color-accent); background: var(--color-entry-bg); padding-left: 4px; }
-.toc-panel .toc-sub { padding-left: 1em; font-size: 0.8em; }
-
-/* ========== Back to Top ========== */
-.back-to-top { position: fixed; bottom: var(--space-lg); right: var(--space-lg); width: 2.5rem; height: 2.5rem; border: 1px solid var(--color-card-border); border-radius: 50%; background: var(--bg-card); color: var(--text-secondary); font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 8px var(--color-card-shadow); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 99; }
-.back-to-top.visible { opacity: 1; pointer-events: auto; }
-.back-to-top:hover { color: var(--color-accent); }
-
-/* ========== Stagger ========== */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-.stagger > * { animation: fadeUp 0.4s ease both; animation-delay: calc(var(--i, 0) * 80ms); }
-@media (prefers-reduced-motion: reduce) { .stagger > * { animation: none; } }
-
-/* ========== Section Divider ========== */
-section + section { border-top: 1px solid var(--color-card-border); margin-top: var(--space-2xl); padding-top: var(--space-xl); }
-
-/* ========== Responsive ========== */
-@media (max-width: 48rem) { body { padding: var(--space-md); } h1 { font-size: 1.5rem; } h2 { font-size: 1.25rem; } }
-@media print { .toc-wrapper, .back-to-top { display: none; } body { max-width: 100%; padding: 1cm; } .callout, .code-block { break-inside: avoid; } }
+/* ========== Breadcrumb Call Chain ========== */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  overflow-x: auto;
+}
+.breadcrumb-item {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.breadcrumb-item.current {
+  color: var(--color-entry);
+  font-weight: 700;
+}
+.breadcrumb-arrow {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+.breadcrumb-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-right: var(--space-xs);
+  white-space: nowrap;
+}
 </style>
 </head>
 
@@ -177,8 +140,9 @@ section + section { border-top: 1px solid var(--color-card-border); margin-top: 
     <a href="#deps">4. 依赖关系</a>
     <a href="#internal">5. 内部结构图</a>
     <div class="toc-phase">Phase 2 — 逐行解读</div>
-    <a href="#file-1" class="toc-sub">【文件A】</a>
-    <a href="#file-2" class="toc-sub">【文件B】</a>
+    <a href="#hotspot">6. 热度筛选</a>
+    <a href="#file-1" class="toc-sub">【文件A — 核心】</a>
+    <a href="#file-2" class="toc-sub">【文件B — 胶水】</a>
     <!-- 每个文件一个链接 -->
     <a href="#next">建议下一步</a>
   </div>
@@ -354,13 +318,56 @@ section + section { border-top: 1px solid var(--color-card-border); margin-top: 
 <!-- ================================================================ -->
 
 <section id="phase2-intro">
-<h2>Phase 2 — 逐行代码解读</h2>
-<p>以下对模块内每个源文件逐块拆分解读。每个代码块回答三个问题：WHY（为什么存在）→ WHAT（是什么）→ HOW（怎么实现）。</p>
+<h2>Phase 2 — 热度筛选 + 逐行解读</h2>
+<p>先通过热度筛选识别核心逻辑块，只对核心逻辑做完整的 WHY/WHAT/HOW 三问，胶水/配置代码标注简要说明。</p>
 </section>
 
-<!-- ===== 文件 A ===== -->
+<!-- ===== 热度筛选结果 ===== -->
+<section id="hotspot">
+<h2>Phase 2 — 6. 热度筛选结果</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>文件</th>
+      <th>代码块</th>
+      <th>行号</th>
+      <th>分类</th>
+      <th>依据</th>
+    </tr>
+  </thead>
+  <tbody class="stagger">
+    <tr style="--i: 0">
+      <td><code>【path/to/fileA】</code></td>
+      <td>【函数名 / 块名】</td>
+      <td>【xx-xx】</td>
+      <td><strong style="color:var(--color-entry)">核心逻辑</strong></td>
+      <td>【关键状态变换 / 非平凡算法 / 被 N 个调用者调用】</td>
+    </tr>
+    <tr style="--i: 1">
+      <td><code>【path/to/fileB】</code></td>
+      <td>【配置段】</td>
+      <td>【xx-xx】</td>
+      <td style="color:var(--text-muted)">胶水/配置，略</td>
+      <td>【单纯参数传递 / 常量定义】</td>
+    </tr>
+    <!-- 继续添加 -->
+  </tbody>
+</table>
+</section>
+
+<!-- ===== 文件 A（核心逻辑为主） ===== -->
 <section id="file-1">
 <h2>Phase 2 — 【文件A】</h2>
+
+<div class="breadcrumb">
+  <span class="breadcrumb-label">调用链：</span>
+  <span class="breadcrumb-item">main.py</span>
+  <span class="breadcrumb-arrow">&#x2192;</span>
+  <span class="breadcrumb-item">router.py</span>
+  <span class="breadcrumb-arrow">&#x2192;</span>
+  <span class="breadcrumb-item current">handler.py</span>
+</div>
 
 <div class="callout callout-entry">
   <div class="callout-title">&#x1f4c4; 文件 WHY</div>
@@ -369,7 +376,7 @@ section + section { border-top: 1px solid var(--color-card-border); margin-top: 
   </div>
 </div>
 
-<!-- 代码块 1 -->
+<!-- 核心逻辑块 1（完整 WHY/WHAT/HOW） -->
 <div class="code-block">
   <div class="code-block-header">
     <span class="file-path">【path/to/file】</span>
@@ -389,27 +396,10 @@ section + section { border-top: 1px solid var(--color-card-border); margin-top: 
   </div>
 </div>
 
-<!-- 代码块 2 -->
-<div class="code-block">
-  <div class="code-block-header">
-    <span class="file-path">【path/to/file】</span>
-    <span class="line-range">行 【xx-xx】</span>
-  </div>
-  <div class="code-block-why">
-    <strong>WHY</strong>：【为什么需要这段代码？】
-  </div>
-  <div class="code-block-what">
-    <strong>WHAT</strong>：【这段代码是干什么的？】
-  </div>
-  <div class="code-block-body">
-    <pre><code class="language-【sv/cpp/c/...】">【逐行代码】</code></pre>
-  </div>
-  <div class="code-block-how">
-    <strong>HOW</strong>：【逐行解读】
-  </div>
+<!-- 胶水/配置块（简要标注，不展开） -->
+<div class="code-block-skipped">
+  <span class="file-path">【path/to/file】</span> 行 【xx-xx】— 【类型转换/参数传递/常量定义】，略。
 </div>
-
-<!-- 文件的技术图 -->
 <h3>技术图：【文件A】数据通路</h3>
 <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"
      style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
@@ -427,6 +417,15 @@ section + section { border-top: 1px solid var(--color-card-border); margin-top: 
 <!-- ===== 文件 B（重复以上结构） ===== -->
 <section id="file-2">
 <h2>Phase 2 — 【文件B】</h2>
+
+<div class="breadcrumb">
+  <span class="breadcrumb-label">调用链：</span>
+  <span class="breadcrumb-item">main.py</span>
+  <span class="breadcrumb-arrow">&#x2192;</span>
+  <span class="breadcrumb-item">router.py</span>
+  <span class="breadcrumb-arrow">&#x2192;</span>
+  <span class="breadcrumb-item current">【文件B】</span>
+</div>
 
 <div class="callout callout-entry">
   <div class="callout-title">&#x1f4c4; 文件 WHY</div>

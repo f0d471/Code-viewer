@@ -2,6 +2,8 @@
 
 本文件定义 code-viewer 输出的 HTML 报告的全部视觉规范。**首次输出前必读。**
 
+> **CSS 维护**：所有共享样式集中在 `templates/shared-styles.css`。修改颜色、变量、callout 类型等只需改这一个文件。各模板内只保留独有样式（scan=subsystem-card, deep=code-block, flow=timing-diagram）。Agent 输出 HTML 时从 shared-styles.css 注入完整 CSS。
+
 ---
 
 ## 1. 设计哲学
