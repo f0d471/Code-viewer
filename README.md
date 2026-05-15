@@ -136,9 +136,9 @@ code-viewer/
 ├── SKILL.md                    # Skill 入口 + 命令定义
 ├── commands/
 │   ├── ask.md                  # 即时答疑流程
+│   ├── flow.md                 # 信号生命周期追踪流程
 │   ├── scan.md                 # 项目架构 Wiki 流程
-│   ├── deep.md                 # 模块解剖流程（两阶段）
-│   └── flow.md                 # 信号生命周期追踪流程
+│   └── deep.md                 # 模块解剖流程（两阶段）
 ├── core/
 │   ├── rules.md                # 硬性规则 + Forbidden + 质量门禁
 │   ├── vsl-principles.md       # VSL 设计原则（5 条）
