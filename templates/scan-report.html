@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -102,9 +102,9 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
     <a href="#overview">项目概览</a>
     <a href="#tree">文件树</a>
     <a href="#layers">子系统分解</a>
+    <a href="#reading-path">推荐阅读顺序</a>
     <a href="#arch">架构全景图</a>
     <a href="#goal">你的目标是什么？</a>
-    <a href="#reading-path">推荐阅读顺序</a>
     <!-- 子系统链接 -->
     <a href="#sub-1" class="toc-sub">【子系统A】</a>
     <a href="#sub-2" class="toc-sub">【子系统B】</a>
@@ -209,74 +209,9 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
 </table>
 </section>
 
-<!-- ===== 4. 架构全景图 ===== -->
-<section id="arch">
-<h2>4. 架构全景图</h2>
-
-<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg"
-     style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
-  <defs>
-    <marker id="arrow-arch" viewBox="0 0 10 7" refX="10" refY="3.5"
-      markerWidth="8" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4a4a6a"/>
-    </marker>
-  </defs>
-  <!-- agent 绘制完整架构图 -->
-  <!-- 每个子系统一个大节点，内部可列出关键模块 -->
-  <!-- 连线表示依赖关系 -->
-</svg>
-</section>
-
-<!-- ===== 4.3 目标驱动 ===== -->
-<section id="goal">
-<h2>4.3 你的目标是什么？</h2>
-
-<p>不同的阅读目标对应不同的路径。根据你的目标选择最高效的切入点：</p>
-
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--space-md); margin: var(--space-lg) 0;">
-
-  <div class="callout callout-entry" style="margin: 0;">
-    <div class="callout-title">&#x1f3af; 理解一个具体功能</div>
-    <div class="callout-body">
-      <p>比如"用户登录是怎么实现的""这个请求怎么处理的"</p>
-      <p><strong>推荐</strong>：<code>/code-viewer flow 【功能名】</code></p>
-      <p>直接追踪数据流，不用先看全貌。</p>
-    </div>
-  </div>
-
-  <div class="callout callout-dependency" style="margin: 0;">
-    <div class="callout-title">&#x1f4d6; 搞清楚项目怎么组织的</div>
-    <div class="callout-body">
-      <p>比如"这个项目分几层""各子系统怎么协作"</p>
-      <p><strong>推荐</strong>：继续看下面的推荐阅读顺序</p>
-      <p>scan → deep，从全局到模块。</p>
-    </div>
-  </div>
-
-  <div class="callout callout-tip" style="margin: 0;">
-    <div class="callout-title">&#x1f527; 修改某个具体模块</div>
-    <div class="callout-body">
-      <p>比如"我要改这个函数""这个模块的逻辑我要重构"</p>
-      <p><strong>推荐</strong>：<code>/code-viewer deep 【模块路径】</code></p>
-      <p>带预检索（Step 0），直接解剖目标模块。</p>
-    </div>
-  </div>
-
-  <div class="callout callout-warning" style="margin: 0;">
-    <div class="callout-title">&#x2753; 随便问问</div>
-    <div class="callout-body">
-      <p>比如"这个函数为什么这么写""这个变量从哪来的"</p>
-      <p><strong>推荐</strong>：<code>/code-viewer ask 【问题】</code></p>
-      <p>即时回答，不生成报告。</p>
-    </div>
-  </div>
-
-</div>
-</section>
-
-<!-- ===== 4.5 推荐阅读顺序 ===== -->
+<!-- ===== 4. 推荐阅读顺序 ===== -->
 <section id="reading-path">
-<h2>4.5 推荐阅读顺序</h2>
+<h2>4. 推荐阅读顺序</h2>
 
 <p>以下阅读路径基于洋葱模型（L0→L3），从最重要的入口开始，逐步深入。每个步骤标注"读什么文件"和"理解什么"，让你知道下一步该看什么。</p>
 
@@ -344,11 +279,77 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
 </div>
 </section>
 
-<!-- ===== 5. 子系统详细分析 ===== ===== -->
+
+<!-- ===== 5. 架构全景图 ===== -->
+<section id="arch">
+<h2>5. 架构全景图</h2>
+
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg"
+     style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
+  <defs>
+    <marker id="arrow-arch" viewBox="0 0 10 7" refX="10" refY="3.5"
+      markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4a4a6a"/>
+    </marker>
+  </defs>
+  <!-- agent 绘制完整架构图 -->
+  <!-- 每个子系统一个大节点，内部可列出关键模块 -->
+  <!-- 连线表示依赖关系 -->
+</svg>
+</section>
+
+<!-- ===== 6. 目标驱动 ===== -->
+<section id="goal">
+<h2>6. 你的目标是什么？</h2>
+
+<p>不同的阅读目标对应不同的路径。根据你的目标选择最高效的切入点：</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--space-md); margin: var(--space-lg) 0;">
+
+  <div class="callout callout-entry" style="margin: 0;">
+    <div class="callout-title">&#x1f3af; 理解一个具体功能</div>
+    <div class="callout-body">
+      <p>比如"用户登录是怎么实现的""这个请求怎么处理的"</p>
+      <p><strong>推荐</strong>：<code>/code-viewer flow 【功能名】</code></p>
+      <p>直接追踪数据流，不用先看全貌。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-dependency" style="margin: 0;">
+    <div class="callout-title">&#x1f4d6; 搞清楚项目怎么组织的</div>
+    <div class="callout-body">
+      <p>比如"这个项目分几层""各子系统怎么协作"</p>
+      <p><strong>推荐</strong>：继续看下面的推荐阅读顺序</p>
+      <p>scan → deep，从全局到模块。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-tip" style="margin: 0;">
+    <div class="callout-title">&#x1f527; 修改某个具体模块</div>
+    <div class="callout-body">
+      <p>比如"我要改这个函数""这个模块的逻辑我要重构"</p>
+      <p><strong>推荐</strong>：<code>/code-viewer deep 【模块路径】</code></p>
+      <p>带预检索（Step 0），直接解剖目标模块。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-warning" style="margin: 0;">
+    <div class="callout-title">&#x2753; 随便问问</div>
+    <div class="callout-body">
+      <p>比如"这个函数为什么这么写""这个变量从哪来的"</p>
+      <p><strong>推荐</strong>：<code>/code-viewer ask 【问题】</code></p>
+      <p>即时回答，不生成报告。</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ===== 7. 子系统详细分析 ===== ===== -->
 <!-- 每个子系统一个 section，默认折叠（<details>），点击展开详细内容 -->
 
 <section id="sub-1">
-<h2>5.1 【子系统A】</h2>
+<h2>7.1 【子系统A】</h2>
 
 <details>
 <summary class="subsystem-summary">
@@ -427,7 +428,7 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
 
 <!-- ===== 重复以上 section 结构给每个子系统 ===== -->
 <section id="sub-2">
-<h2>5.2 【子系统B】</h2>
+<h2>7.2 【子系统B】</h2>
 
 <details>
 <summary class="subsystem-summary">
@@ -440,9 +441,9 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
 </details>
 </section>
 
-<!-- ===== 6. 推荐下一步 ===== -->
+<!-- ===== 8. 推荐下一步 ===== -->
 <section id="next">
-<h2>6. 推荐下一步</h2>
+<h2>8. 推荐下一步</h2>
 
 <div class="callout callout-tip">
   <div class="callout-title">&#x1f4a1; 推荐深入</div>

@@ -129,9 +129,21 @@
 <body>
 
 <!-- ===== TOC Navigation ===== -->
+<!-- 根据模式选择 TOC 结构：子系统模式 or 模块模式 -->
 <div class="toc-wrapper">
   <button class="toc-toggle" aria-label="目录" title="目录">&#x2261;</button>
   <div class="toc-panel" id="toc-panel">
+    <!-- ===== 子系统模式 TOC ===== -->
+    <div class="toc-panel-title">子系统解剖目录</div>
+    <a href="#sub-overview">1. 子系统概览</a>
+    <a href="#sub-modules">2. 模块清单</a>
+    <a href="#sub-calls">3. 调用关系图</a>
+    <a href="#sub-dataflow">4. 数据流</a>
+    <a href="#sub-boundaries">5. 模块边界</a>
+    <a href="#sub-next">6. 推荐下一步</a>
+
+    <!-- ===== 模块模式 TOC ===== -->
+    <!--
     <div class="toc-panel-title">模块解剖目录</div>
     <div class="toc-phase">Phase 1 — 模块解剖</div>
     <a href="#why">1. 动机（WHY）</a>
@@ -143,23 +155,175 @@
     <a href="#hotspot">6. 热度筛选</a>
     <a href="#file-1" class="toc-sub">【文件A — 核心】</a>
     <a href="#file-2" class="toc-sub">【文件B — 胶水】</a>
-    <!-- 每个文件一个链接 -->
     <a href="#next">建议下一步</a>
+    -->
   </div>
 </div>
 
 <!-- ===== Title + Meta ===== -->
+<!-- 子系统模式标题 -->
+<h1>&#x1f50d; 【子系统名】— 子系统解剖</h1>
+<div class="meta-bar">
+  路径：<code>【path/to/subsystem】</code><br>
+  模块数量：【N】个<br>
+  技术栈：【语言 + 框架】<br>
+  分析日期：【YYYY-MM-DD】
+</div>
+
+<!-- 模块模式标题（取消注释使用）
 <h1>&#x1f50d; 【模块名】— 模块解剖</h1>
 <div class="meta-bar">
   文件路径：<code>【path/to/module】</code><br>
   所属子系统：【子系统名】<br>
   所属层级：【L0/L1/L2/L3】<br>
-  分析日期：【YYYY-MM-DD】
-</div>
+  分析日期：【YYYY-MM-DD】</div>
+-->
 
 <!-- ================================================================ -->
-<!--  Phase 1：模块解剖（第一性原理）                                  -->
+<!--  子系统模式：模块清单 + 调用关系 + 数据流 + 边界                   -->
 <!-- ================================================================ -->
+
+<!-- ===== 1. 子系统概览 ===== -->
+<section id="sub-overview">
+<h2>1. 子系统概览</h2>
+
+<p>这个子系统包含 <strong>【N】</strong> 个模块，一句话职责：<strong>【做什么】</strong>。</p>
+
+<div class="metrics-row">
+  <span class="metric" title="模块总数">
+    <span class="metric-value">【N】</span><span class="metric-label">个模块</span>
+  </span>
+  <span class="metric" title="源文件总数">
+    <span class="metric-value">【N】</span><span class="metric-label">个源文件</span>
+  </span>
+  <span class="metric" title="被几个子系统依赖">
+    <span class="metric-value">【N】</span><span class="metric-label">个子系统依赖它</span>
+  </span>
+</div>
+</section>
+
+<!-- ===== 2. 模块清单 ===== -->
+<section id="sub-modules">
+<h2>2. 模块清单</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>模块名</th>
+      <th>路径</th>
+      <th>一句话职责</th>
+      <th>文件列表</th>
+      <th>公开接口</th>
+    </tr>
+  </thead>
+  <tbody class="stagger">
+    <tr style="--i: 0">
+      <td><strong>【模块A】</strong></td>
+      <td><code>【path/to/moduleA】</code></td>
+      <td>【做什么】</td>
+      <td>【file1.v, file2.v】</td>
+      <td>【函数名/端口名】</td>
+    </tr>
+    <!-- 继续添加每个模块 -->
+  </tbody>
+</table>
+</section>
+
+<!-- ===== 3. 调用关系图 ===== -->
+<section id="sub-calls">
+<h2>3. 调用关系图</h2>
+
+<p>子系统内各模块的 import / 调用关系：</p>
+
+<table>
+  <thead><tr><th>模块</th><th>import 了</th><th>被 import</th></tr></thead>
+  <tbody>
+    <tr><td><strong>【模块A】</strong></td><td>【模块B, 模块C】</td><td>【模块D】</td></tr>
+    <!-- 继续添加 -->
+  </tbody>
+</table>
+
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"
+     style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
+  <defs>
+    <marker id="arrow-sub-call" viewBox="0 0 10 7" refX="10" refY="3.5"
+      markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <!-- agent 按实际调用关系填充：模块为节点，调用为连线 -->
+</svg>
+</section>
+
+<!-- ===== 4. 数据流 ===== -->
+<section id="sub-dataflow">
+<h2>4. 数据流</h2>
+
+<p>数据从 <strong>【哪里进入子系统】</strong>，经过 <strong>【哪些模块变换】</strong>，从 <strong>【哪里离开子系统】</strong>。</p>
+
+<table>
+  <thead><tr><th>阶段</th><th>模块</th><th>输入</th><th>变换</th><th>输出</th></tr></thead>
+  <tbody class="stagger">
+    <tr style="--i: 0"><td>1</td><td>【模块A】</td><td>【外部输入】</td><td>【做什么变换】</td><td>【输出格式】</td></tr>
+    <tr style="--i: 1"><td>2</td><td>【模块B】</td><td>【模块A 输出】</td><td>【做什么变换】</td><td>【输出格式】</td></tr>
+    <!-- 继续添加 -->
+  </tbody>
+</table>
+
+<svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg"
+     style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
+  <defs>
+    <marker id="arrow-sub-flow" viewBox="0 0 10 7" refX="10" refY="3.5"
+      markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4a4a6a"/>
+    </marker>
+  </defs>
+  <!-- agent 填充数据流图：入口 → 模块A → 模块B → 出口 -->
+</svg>
+</section>
+
+<!-- ===== 5. 模块边界 ===== -->
+<section id="sub-boundaries">
+<h2>5. 模块边界</h2>
+
+<!-- 每个模块一个 boundary 卡片 -->
+<div class="code-block" style="margin-bottom: var(--space-lg);">
+  <div class="code-block-header">
+    <span class="file-path">【模块A】</span>
+    <span class="line-range">【path/to/moduleA】</span>
+  </div>
+  <div class="code-block-what">
+    <strong>对外接口</strong>：【暴露的函数/类/端口/配置项】
+  </div>
+  <div class="code-block-why">
+    <strong>内部不暴露</strong>：【私有函数、内部状态、实现细节】
+  </div>
+  <div class="code-block-how">
+    <strong>依赖边界</strong>：我依赖 <strong>【子系统外的模块/库】</strong>；<strong>【子系统外的模块】</strong> 依赖我
+  </div>
+</div>
+
+<!-- 继续添加每个模块的边界卡片 -->
+</section>
+
+<!-- ===== 6. 推荐下一步（子系统模式） ===== -->
+<section id="sub-next">
+<h2>6. 推荐下一步</h2>
+
+<div class="callout callout-tip">
+  <div class="callout-title">&#x1f4a1; 推荐深入</div>
+  <div class="callout-body">
+    <p>最值得先深入的模块是 <strong>【xxx】</strong>，因为 【原因】。</p>
+    <p>可以用 <code>/code-viewer deep 【模块路径】</code> 深入解剖。</p>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================ -->
+<!--  模块模式：Phase 1 + Phase 2                                     -->
+<!-- ================================================================ -->
+
+<!-- ===== Phase 1：模块解剖（第一性原理） ===== -->
 
 <!-- ===== 1. 动机（WHY） ===== -->
 <section id="why">

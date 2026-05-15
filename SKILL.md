@@ -1,6 +1,6 @@
 ---
 name: code-viewer
-description: 代码阅读 skill，仅通过斜杠命令触发。四个命令：ask（即时答疑）、scan（项目架构 Wiki）、deep（模块解剖 + 逐行解读）、flow（信号生命周期追踪）。支持软件项目和硬件描述语言（Verilog / SystemVerilog / Chisel）。
+description: 代码阅读 skill，仅通过斜杠命令触发。四个命令：ask（即时答疑）、scan（项目架构 Wiki）、deep（模块解剖 / 子系统解剖 + 逐行解读）、flow（信号生命周期追踪）。支持软件项目和硬件描述语言（Verilog / SystemVerilog / Chisel）。
 ---
 
 # Code Viewer Skill
@@ -15,7 +15,7 @@ description: 代码阅读 skill，仅通过斜杠命令触发。四个命令：a
 |---|---|---|
 | ask | `/code-viewer ask [问题]` | 即时答疑：回答一个具体问题，对话内输出（带 SVG 定位图 + 调用链），不生成 HTML |
 | scan | `/code-viewer scan [路径]` | 项目架构 Wiki：深度文件树 + 子系统分解 + 架构全景图 + 每个子系统详细分析 |
-| deep | `/code-viewer deep [模块]` | 模块解剖：第一性原理 WHY/WHAT/HOW + 热度筛选 + 逐行代码解读 + 技术图 |
+| deep | `/code-viewer deep [路径]` | 模块/子系统解剖：自动判断模式——模块模式（WHY/WHAT/HOW + 逐行解读）或子系统模式（模块清单 + 调用关系 + 数据流 + 边界） |
 | flow | `/code-viewer flow [信号]` | 信号生命周期追踪：逐跳变换 + 场景类型检测 + 时序图（并行） + 跨模块 |
 
 ## 推荐探索顺序
