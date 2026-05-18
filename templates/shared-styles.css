@@ -4,6 +4,13 @@
  * Agent 输出 HTML 时将此文件内容注入 <style> 标签。
  * =============================================== */
 
+/* ========== Google Fonts (must also be in <head> as <link>) ========== */
+/* @import fallback — ensures fonts load even if <link> is missing */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* ========== CSS Reset ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 /* ========== CSS Variables ========== */
 :root {
   --text-primary: #1a1a2e; --text-secondary: #4a4a6a; --text-muted: #8888a0;

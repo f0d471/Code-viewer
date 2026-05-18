@@ -252,6 +252,7 @@
     </marker>
   </defs>
   <!-- agent 按实际调用关系填充：模块为节点，调用为连线 -->
+  <!-- 规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
 </svg>
 </section>
 
@@ -275,10 +276,11 @@
   <defs>
     <marker id="arrow-sub-flow" viewBox="0 0 10 7" refX="10" refY="3.5"
       markerWidth="8" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4a4a6a"/>
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--svg-arrow)"/>
     </marker>
   </defs>
   <!-- agent 填充数据流图：入口 → 模块A → 模块B → 出口 -->
+  <!-- 规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
 </svg>
 </section>
 
@@ -452,11 +454,11 @@
   <defs>
     <marker id="arrow-dep" viewBox="0 0 10 7" refX="10" refY="3.5"
       markerWidth="8" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4a4a6a"/>
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--svg-arrow)"/>
     </marker>
   </defs>
   <!-- 本模块居中，上方=调用者，下方=被调用者 -->
-  <!-- agent 填充 -->
+  <!-- agent 填充。规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
 </svg>
 </section>
 
@@ -473,7 +475,7 @@
     </marker>
   </defs>
   <!-- 内部子模块的层次关系图 -->
-  <!-- agent 填充 -->
+  <!-- agent 填充。规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
 </svg>
 </section>
 
@@ -574,7 +576,7 @@
     </marker>
   </defs>
   <!-- 数据通路图 / 状态机图 / 时序图 -->
-  <!-- agent 填充 -->
+  <!-- agent 填充。规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
 </svg>
 </section>
 

@@ -66,7 +66,8 @@ deep 有两种模式，根据传入路径自动判断：
 
 #### Step S5：输出报告
 
-按 `templates/deep-report.html` 输出，使用子系统模式结构：
+1. **Read `templates/shared-styles.css`**，将完整内容注入报告 `<style>` 标签。
+2. 按 `templates/deep-report.html` 输出，使用子系统模式结构：
 1. **子系统概览**（一句话 + 模块数量 + 技术栈）
 2. **模块清单**（每个模块一行，含一句话职责 + 文件列表）
 3. **调用关系图**（SVG，模块间调用）
@@ -161,7 +162,8 @@ deep 有两种模式，根据传入路径自动判断：
 
 #### Step M5：输出 Phase 1 报告
 
-按 `templates/deep-report.html` 输出，包含：
+1. **Read `templates/shared-styles.css`**，将完整内容注入报告 `<style>` 标签。
+2. 按 `templates/deep-report.html` 输出，包含：
 1. **动机**（WHY）— callout-entry
 2. **功能**（WHAT）— 公开接口表
 3. **核心实现**（HOW）— 内部结构 + 关键代码
@@ -220,7 +222,8 @@ deep 有两种模式，根据传入路径自动判断：
 
 #### Step M8：输出 Phase 2 报告
 
-按 `templates/deep-report.html` 的 Phase 2 部分输出，包含：
+1. **Read `templates/shared-styles.css`**，将完整内容注入报告 `<style>` 标签。
+2. 按 `templates/deep-report.html` 的 Phase 2 部分输出，包含：
 - 每个文件一个 section
 - 每个 section：文件 WHY → 核心逻辑块的 WHY/WHAT/HOW → 胶水/配置的简要标注 → 技术图
 - 末尾：总结 + 建议下一步

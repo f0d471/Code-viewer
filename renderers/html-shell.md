@@ -115,30 +115,27 @@
 
 ## 3. 排版规范
 
+### 3.0 CSS Reset（必须）
+
+所有报告必须在 CSS 最前面包含全局重置，否则 box-sizing 会导致间距和宽度计算错误：
+
 ```css
-body {
-  font-family: var(--font-body);
-  color: var(--text-primary);
-  background: var(--bg-page);
-  line-height: 1.8;
-  max-width: var(--content-width);
-  margin: 0 auto;
-  padding: var(--space-xl);
-}
-
-h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-  line-height: 1.3;
-  margin-top: var(--space-2xl);
-  margin-bottom: var(--space-md);
-}
-
-h1 { font-size: 2rem; border-bottom: 3px solid var(--color-entry); padding-bottom: var(--space-sm); }
-h2 { font-size: 1.5rem; color: var(--color-entry); }
-h3 { font-size: 1.2rem; }
-
-p { margin-bottom: var(--space-md); }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 ```
+
+### 3.1 字体加载（必须）
+
+**在 `<head>` 中加载 Google Fonts**，不能只依赖 CSS font-family fallback。Windows 上 Noto Sans SC 和 JetBrains Mono 通常未安装，不加载会导致 fallback 到极细的系统字体。
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+```
+
+`<style>` 内也加 `@import` 作为 fallback（见 shared-styles.css 顶部）。
+
+### 3.2 排版
 
 ---
 
@@ -463,12 +460,17 @@ tr.row-l3 { border-left: 3px solid #d0d0d0; }
 
 ## 8. SVG 规范
 
-所有图表用内联 SVG。详见 `renderers/callgraph.md`（重写后）。
+所有图表用内联 SVG。详见 `renderers/callgraph.md`。
+
+**核心原则：文字不叠在图形上。** rect 只做色块标识，模块名放在 rect 下方，连线标注带背景衬底。
 
 简要约定：
 - 入口节点：`fill="var(--svg-entry-fill)" stroke="var(--svg-entry)" stroke-width="2.5" rx="6"`
 - 普通模块节点：`fill="var(--svg-node-fill)" stroke="var(--svg-node-stroke)" stroke-width="1.5" rx="6"`
 - 依赖节点：`fill="var(--svg-dependency-fill)" stroke="var(--svg-dependency)" stroke-width="1.5" rx="6"`
+- 节点名称：`<text>` 放在 rect 正下方（`y = rect.y + rect.height + 16`），`text-anchor="middle"` 居中
+- 连线标注：`<rect fill="var(--bg-page)">` 衬底 + `<text>` 放在线侧面，不压线
+- 同层节点间距 ≥ 40px（水平），≥ 60px（垂直）
 
 SVG 的 fill/stroke 引用 CSS 变量，自动跟随亮色/暗色模式。
 

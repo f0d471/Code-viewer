@@ -11,6 +11,11 @@
 <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"
   onload="hljs.highlightAll();"></script>
 
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 /* ===== Inject shared-styles.css (templates/shared-styles.css) ===== */
 /* CSS Variables, Dark Mode, Reset, Base, Callouts, Layer Badge, Tables,
@@ -157,16 +162,40 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
 <p>这个项目由 <strong>【N】</strong> 个子系统组成，按层级关系可分为：</p>
 
 <!-- Layer Diagram -->
-<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg"
+<svg viewBox="0 0 860 540" xmlns="http://www.w3.org/2000/svg"
      style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
   <defs>
     <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
       markerWidth="8" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4a4a6a"/>
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--svg-arrow)"/>
     </marker>
   </defs>
+  <!-- 层级标签（最左侧，不与节点重叠） -->
+  <text x="10" y="50" font-size="12" font-weight="700" fill="var(--color-entry)">L0 — 硬件核心</text>
+  <text x="10" y="180" font-size="12" font-weight="700" fill="var(--color-dependency)">L1 — 仿真 + 验证</text>
+  <text x="10" y="310" font-size="12" font-weight="700" fill="var(--color-tip)">L2 — 运行时 + OS</text>
+  <text x="10" y="450" font-size="12" font-weight="700" fill="var(--text-muted)">L3 — 应用层</text>
+
+  <!-- 节点示例：rect 做色块，名称在 rect 下方 -->
+  <!--
+  <rect x="310" y="25" width="240" height="50" rx="6"
+        fill="var(--svg-entry-fill)" stroke="var(--svg-entry)" stroke-width="2.5"/>
+  <text x="430" y="92" text-anchor="middle" font-weight="700" font-size="14"
+        fill="var(--text-primary)">【子系统名】</text>
+  <text x="430" y="108" text-anchor="middle" font-size="10"
+        fill="var(--text-secondary)">【一句话职责】</text>
+  -->
+
+  <!-- 连线示例：标注带背景衬底 -->
+  <!--
+  <line x1="370" y1="75" x2="260" y2="140"
+        stroke="var(--svg-arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="280" y="96" width="60" height="18" rx="3" fill="var(--bg-page)"/>
+  <text x="310" y="109" text-anchor="middle" font-size="10" fill="var(--text-muted)">【关系】</text>
+  -->
+
   <!-- agent 按实际子系统关系填充 -->
-  <!-- 从上到下：应用层 → 运行时层 → 仿真层 → 硬件核心层 -->
+  <!-- 规则：文字在 rect 外部，连线标注有背景衬底，同层节点间距 ≥ 40px -->
 </svg>
 
 <h3>子系统清单</h3>
@@ -289,12 +318,13 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
   <defs>
     <marker id="arrow-arch" viewBox="0 0 10 7" refX="10" refY="3.5"
       markerWidth="8" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#4a4a6a"/>
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--svg-arrow)"/>
     </marker>
   </defs>
   <!-- agent 绘制完整架构图 -->
-  <!-- 每个子系统一个大节点，内部可列出关键模块 -->
-  <!-- 连线表示依赖关系 -->
+  <!-- 规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
+  <!-- 每个子系统一个节点：rect + 名称 + 一句话职责（均在 rect 外） -->
+  <!-- 连线表示依赖关系，标注带背景 rect 衬底 -->
 </svg>
 </section>
 
@@ -416,10 +446,11 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
   <defs>
     <marker id="arrow-sub1" viewBox="0 0 10 7" refX="10" refY="3.5"
       markerWidth="8" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#7c3aed"/>
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--svg-arrow)"/>
     </marker>
   </defs>
   <!-- agent 按实际调用关系填充 -->
+  <!-- 规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
 </svg>
 
 </div>
@@ -436,12 +467,83 @@ details[open] > .subsystem-summary { border-bottom-left-radius: 0; border-bottom
   <strong>【子系统名称】</strong> — 【一句话职责】</summary>
 </summary>
 <div class="details-body">
-<!-- 同上结构 -->
+
+<div class="subsystem-card">
+  <p><strong>技术栈</strong>：【语言 + 框架 + 工具】</p>
+  <p><strong>文件规模</strong>：【xx】 个文件，约 【xx】 行代码</p>
+  <div class="metrics-row">
+    <span class="metric" title="入口文件行数，越短越值得先读">
+      <span class="metric-value">【xx】</span><span class="metric-label">行 入口</span>
+    </span>
+    <span class="metric" title="核心模块数量">
+      <span class="metric-value">【x】</span><span class="metric-label">个核心模块</span>
+    </span>
+    <span class="metric" title="被其他子系统依赖的数量，越多越重要">
+      <span class="metric-value">【x】</span><span class="metric-label">个子系统依赖它</span>
+    </span>
+  </div>
+</div>
+
+<h4>目录结构</h4>
+<pre><code>【子系统内部的 tree 输出，展开到底】</code></pre>
+
+<h4>最小核心</h4>
+
+<div class="callout callout-entry">
+  <div class="callout-title">&#x1f3e0; 入口</div>
+  <div class="callout-body">
+    <p><strong>入口文件</strong>：<code>【path/to/entry】</code></p>
+    <p>【怎么找到的 + 它做了什么】</p>
+  </div>
+</div>
+
+<div class="code-annotated">
+  <div class="code-label">【path/to/entry】— 入口文件</div>
+  <pre><code class="language-【sv/cpp/c/...】">【不超过 30 行的关键代码】</code></pre>
+</div>
+
+<h4>公开接口</h4>
+<table>
+  <thead><tr><th>接口</th><th>类型</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><code>【接口名】</code></td><td>【函数/API/端口】</td><td>【做什么】</td></tr>
+  </tbody>
+</table>
+
+<h4>第一层模块</h4>
+<table>
+  <thead><tr><th>模块</th><th>路径</th><th>一句话职责</th></tr></thead>
+  <tbody class="stagger">
+    <tr style="--i: 0"><td><strong>【模块A】</strong></td><td><code>【path/】</code></td><td>【做什么】</td></tr>
+  </tbody>
+</table>
+
+<h4>调用关系图</h4>
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"
+     style="font-family: 'Noto Sans SC', system-ui, sans-serif;">
+  <defs>
+    <marker id="arrow-sub2" viewBox="0 0 10 7" refX="10" refY="3.5"
+      markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--svg-arrow)"/>
+    </marker>
+  </defs>
+  <!-- agent 按实际调用关系填充 -->
+  <!-- 规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
+</svg>
+
+<div class="callout callout-warning">
+  <div class="callout-title">待深入</div>
+  <div class="callout-body">
+    <p>以下模块尚未展开，可用 <code>/code-viewer deep 【路径】</code> 深入。</p>
+    <ul>
+      <li><code>【模块/文件】</code> — 【一句话说明】</li>
+    </ul>
+  </div>
+</div>
+
 </div>
 </details>
 </section>
-
-<!-- ===== 8. 推荐下一步 ===== -->
 <section id="next">
 <h2>8. 推荐下一步</h2>
 

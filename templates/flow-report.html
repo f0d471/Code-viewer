@@ -243,12 +243,13 @@
   <defs>
     <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
       markerWidth="8" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#7c3aed"/>
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="var(--svg-arrow)"/>
     </marker>
   </defs>
   <!-- agent 按实际数据流填充：输入 → 模块A → 分支 → 模块B → 输出 -->
-  <!-- 分支节点：fill="#fffbeb" stroke="#d97706" -->
-  <!-- 普通节点：fill="#f5f3ff" stroke="#7c3aed" -->
+  <!-- 分支节点：fill="var(--color-tip-bg)" stroke="var(--color-tip)" -->
+  <!-- 普通节点：fill="var(--svg-entry-fill)" stroke="var(--svg-entry)" -->
+  <!-- 规则：rect 做色块，名称在 rect 下方，连线标注有背景衬底 -->
 </svg>
 </section>
 
